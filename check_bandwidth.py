@@ -180,13 +180,13 @@ class BandwidthMonitoring:
                 transmit_speed = transmitted_subtracted / time_diff
                 
                 # Handle check results.
-                if float(self.convert_bytes(total_speed)) >= float(self.critical_threshold):
+                if float(self.convert_bytes(receive_speed)) >= float(self.critical_threshold) or float(self.convert_bytes(transmit_speed)) >= float(self.critical_threshold):
                     print('CRITICAL - Bandwidth Threshold: {}{} - rx: {}, tx: {} - Total: {} | in-{}={}{};;;; out-{}={}{};;;;'.format(self.critical_threshold, self.units, self.dynamic_bytes_formatter(receive_speed), self.dynamic_bytes_formatter(transmit_speed), 
                                                                                                                               self.dynamic_bytes_formatter(total_speed), self.wanted_interface_stats, self.convert_bytes(receive_speed), self.units, 
                                                                                                                               self.wanted_interface_stats, self.convert_bytes(transmit_speed), self.units))
                     self.create_new_reference_file()
                     sys.exit(2)
-                elif float(self.convert_bytes(total_speed)) >= float(self.warning_threshold):
+                elif float(self.convert_bytes(receive_speed)) >= float(self.warning_threshold) or float(self.convert_bytes(transmit_speed)) >= float(self.warning_threshold):
                     print('WARNING - Bandwidth Threshold: {}{} - rx: {}, tx: {} - Total: {} | in-{}={}{};;;; out-{}={}{};;;;'.format(self.critical_threshold, self.units, self.dynamic_bytes_formatter(receive_speed), self.dynamic_bytes_formatter(transmit_speed), 
                                                                                                                              self.dynamic_bytes_formatter(total_speed), self.wanted_interface_stats, self.convert_bytes(receive_speed), self.units, 
                                                                                                                              self.wanted_interface_stats, self.convert_bytes(transmit_speed), self.units))
