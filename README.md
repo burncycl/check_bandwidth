@@ -4,7 +4,7 @@ Python3 Nagios+NRPE script to check bandwidth on Linux machine.
 
 Check uses /proc/dev/net to measure bandwidth on Linux systems. 
 
-Outputs metrics using dynamic units (i.e. byte rate achieved). However, alert threshold and graphing units are statically configured. Works in conjunction with NRPE. 
+Outputs metrics using dynamic units (i.e. byte rate achieved). However, alert threshold and graphing are statically configured to a specified unit (e.g. kBps). Works in conjunction with NRPE. 
 
 Referenced: https://github.com/samyboy/check_iftraffic_nrpe.py , but desired metrics output. Didn't want to modify this codebase. Wrote my own. 
 
