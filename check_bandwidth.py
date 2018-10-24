@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # 2018/09 BuRnCycL 
 # Check uses /proc/dev/net to measure bandwidth on Linux systems.
 # Outputs metrics using dynamic units (i.e. byte rate achieved). However, alert threshold and graphing units are statically configured. Works in conjunction with NRPE.
