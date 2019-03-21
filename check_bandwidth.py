@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-# 2018/09 BuRnCycL 
+# 2018/09 BuRnCycL
 # Check uses /proc/dev/net to measure bandwidth on Linux systems.
 # Outputs metrics using dynamic units (i.e. byte rate achieved). However, alert threshold and graphing units are statically configured. Works in conjunction with NRPE.
 # Referenced: https://github.com/samyboy/check_iftraffic_nrpe.py , but desired metrics output. Didn't want to modify this codebase. Wrote my own.
-# Dependency on Python3
+# Dependency on Python3 # External dependency on /proc/dev/net
 
 import os, shutil, sys, argparse
 from time import time
@@ -20,9 +20,6 @@ class BandwidthMonitoring:
         self.critical_threshold = (float(CRITICAL_THRESHOLD) * float(LIMIT_THRESHOLD) / float(100)) # Convert percent to a comparable value.
         self.current_stats_file = '/proc/net/dev' # Hard-coded location of current interface stats.
         self.reference_stats_file = '/var/tmp/traffic_stats.dat' # Hard-coded location of reference interface stats.
-
-        # Function calls.
-        self.bandwidth_check()
 
 
     # Parses /proc/net/dev styled data.
@@ -215,7 +212,7 @@ Check measures bandwidth. Outputs metrics using dynamic units (i.e. byte rate ac
 
     Usage:
         -i    Interface to Monitor.
-        -u    Units for Alert threhold and Graphing. Available Units: Bps, kBps, MBps, GBps, TBps, bps, kbps, Mbps, Gbps, Tbps
+        -u    Units for Alert threshold and Graphing. Available Units: Bps, kBps, MBps, GBps, TBps, bps, kbps, Mbps, Gbps, Tbps
         -l    Maximum bandwidth limit threshold. Warning & Critical are calculated as percentages of this value.
         -w    Warning percent threshold for bandwidth. (default : 85)
         -c    Critical percent threshold for bandwidth. (default : 95)
@@ -232,8 +229,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-readme','--readme', help='Display Readme/Help.', action='store_true')
     parser.add_argument('-i', '--interface', help='Interface to monitor.')
-    parser.add_argument('-u', '--units', choices=units, help='Units for Alert threshold and Graphing. (e.g. kBps for kilobytes persecond)')
-    parser.add_argument('-l', '--limit', help='Sets Maximum bandwidth limit. Warning and Critical thresholds are calcuated as percentages of this value.')
+    parser.add_argument('-u', '--units', choices=units, help='Units for Alert threshold and Graphing. (e.g. kBps for kilobytes per second)')
+    parser.add_argument('-l', '--limit', help='Sets Maximum bandwidth limit. Warning and Critical thresholds are calculated as percentages of this value.')
     parser.add_argument('-w', help='Sets Warning threshold as a percent of maximum bandwidth limit. Default: 85', default=85)
     parser.add_argument('-c', help='Sets Critical threshold as a percentage of maximum bandwidth limit. Default: 95', default=95)
     args = parser.parse_args()
@@ -243,7 +240,7 @@ if __name__ == '__main__':
         readme()
 
     elif args.units and args.limit and args.w and args.c is not None:
-        BandwidthMonitoring(INTERFACE=args.interface, UNITS=args.units, LIMIT_THRESHOLD=args.limit, WARNING_THRESHOLD=args.w, CRITICAL_THRESHOLD=args.c)
+        BandwidthMonitoring(INTERFACE=args.interface, UNITS=args.units, LIMIT_THRESHOLD=args.limit, WARNING_THRESHOLD=args.w, CRITICAL_THRESHOLD=args.c).bandwidth_check()
     else:
         print('README: python3 check_bandwidth.py -readme')
 
